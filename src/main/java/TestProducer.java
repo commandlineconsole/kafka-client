@@ -17,7 +17,7 @@ public class TestProducer {
         }
 
 //        assign topicName to a string variable *
-        String topicName = args[0].toString();
+        String topicName = args[0];
 //        create Properties instance to access Producer configs
         Properties properties = new Properties();
 //        assign localhost id, put(key, value) TODO look up differences between .put and .setProperty
@@ -48,7 +48,7 @@ public class TestProducer {
         Producer<String, String> producer = new KafkaProducer<>(properties);
 //        produce 21 records
         for (int i = 0; i < 21; i++)
-            producer.send(new ProducerRecord<String, String>("my-topic", Integer.toString(i), Integer.toString(i)));
+            producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), Integer.toString(i)));
         producer.close();
     }
 }
