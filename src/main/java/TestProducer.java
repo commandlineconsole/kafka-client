@@ -26,8 +26,8 @@ public class TestProducer {
           complete, 'all' -> result in blocking on the full commit of the record (slowest, most durable setting)
  */
         properties.put("acks", "all");
-//        if attempt fails, producer can automatically retry, is set to zero so won't retry
-        properties.put("retries", 0);
+//        if attempt fails, producer can automatically retry, is set to zero so won't retry edit: changing to 3
+        properties.put("retries", 3);
 //      specify producer buffer size in batch.size config, increasing this number results in more batching, requires more memory
 
         properties.put("batch.size", 16384);
