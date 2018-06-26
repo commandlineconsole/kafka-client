@@ -1,7 +1,6 @@
+import java.util.Collections;
 import java.util.Properties;
-import java.util.Arrays;
-import org.apache.kafka.clients.consumer.Consumer;
-//KafkaConsumer class, implements Consumer Interface, this client consumes records from Kafka cluster
+
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -13,7 +12,7 @@ public class TestConsumer {
             return;
         }
 
-        String topicName = args[0].toString();
+        String topicName = args[0];
         Properties properties = new Properties();
 
         properties.put("bootstrap.servers", "localhost:9092");
@@ -24,8 +23,9 @@ public class TestConsumer {
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        Consumer<String, String> consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Arrays.asList(topicName));
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
+//        subscribe to a topic
+        consumer.subscribe(Collections.singletonList(topicName));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records)

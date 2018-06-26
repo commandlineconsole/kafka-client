@@ -1,9 +1,7 @@
 import java.util.Properties;
 
-// import producer packages, interface for KafkaProducer class
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.KafkaProducer;
-// import ProducerRecord, key/value pair sent to Kafka, consists of topic name to which record is being sent, optional: partition number, key and value
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 
@@ -18,9 +16,9 @@ public class TestProducer {
 
 //        assign topicName to a string variable *
         String topicName = args[0];
-//        create Properties instance to access Producer configs
+//        create Properties object
         Properties properties = new Properties();
-//        assign localhost id, put(key, value) TODO look up differences between .put and .setProperty
+//        assign localhost id, put(key, value)
         properties.put("bootstrap.servers", "localhost:9092");
 /*        set acknowledgements for producer requests, acks config controls criteria under which requests are considered
           complete, 'all' -> result in blocking on the full commit of the record (slowest, most durable setting)
@@ -44,11 +42,11 @@ public class TestProducer {
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-//        reference KafkaProducer(a Kafka client that publishes records to the Kafka cluster) via Producer interface
+//        create a new producer by setting appropriate key and value types and passing in Properties object
         Producer<String, String> producer = new KafkaProducer<>(properties);
-//        produce 21 records
+//        send 21 records
         for (int i = 0; i < 21; i++)
-            producer.send(new ProducerRecord<String, String>(topicName, Integer.toString(i), Integer.toString(i)));
+            producer.send(new ProducerRecord<>(topicName, Integer.toString(i), Integer.toString(i)));
         producer.close();
     }
 }
