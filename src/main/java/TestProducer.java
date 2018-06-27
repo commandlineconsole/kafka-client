@@ -1,21 +1,23 @@
 import java.util.Properties;
 
+import com.google.gson.Gson;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 
 public class TestProducer {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
 //     checking to see if something was passed in
-        if(args.length == 0){
+        if (args.length == 0) {
             System.out.println("Enter a topic name");//TODO write a method to handle this
             return;
         }
 
-//        assign topicName to a string variable *
+//        assign topicName to a string variable
         String topicName = args[0];
+
 //        create Properties object
         Properties properties = new Properties();
 //        assign localhost id, put(key, value)
@@ -45,8 +47,27 @@ public class TestProducer {
 //        create a new producer by setting appropriate key and value types and passing in Properties object
         Producer<String, String> producer = new KafkaProducer<>(properties);
 //        send 21 records
-        for (int i = 0; i < 21; i++)
-            producer.send(new ProducerRecord<>(topicName, Integer.toString(i), Integer.toString(i)));
+
+        Event[] events = {
+                new Event("Steven", 13),
+                new Event("Ana", 8),
+                new Event("Lorraine", 2)
+        };
+
+        Gson gson = new Gson();
+
+        for (int i = 0; i < events.length; i++) {
+
+            Event event = events[i];
+            System.out.println("Sending event to topic [" + topicName + "] event [" + event.getName() + ", " + event.getNumCats() + "]");
+
+            String value = gson.toJson(event);
+            System.out.println("Created JSON [" + value + "]");
+
+
+            producer.send(new ProducerRecord<>(topicName, Integer.toString(i), value));
+        }
+
         producer.close();
     }
 }

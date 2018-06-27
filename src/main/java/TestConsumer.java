@@ -1,6 +1,7 @@
 import java.util.Collections;
 import java.util.Properties;
 
+import com.google.gson.Gson;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -25,11 +26,32 @@ public class TestConsumer {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties);
 //        subscribe to a topic
-        consumer.subscribe(Collections.singletonList(topicName));
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records)
-                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+        System.out.println("Subscribing to topic [" + topicName+ "]");
+
+        Gson gson = new Gson();
+
+        try {
+            consumer.subscribe(Collections.singletonList(topicName));
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(1000);
+
+//                System.out.println("Received [" + records.count() + "] records");
+
+                for (ConsumerRecord<String, String> record : records) {
+
+                    String json = record.value();
+
+                    System.out.println("Received JSON [" + json + "]");
+
+                    Event event = gson.fromJson(json, Event.class);
+
+                    System.out.println("Received event from topic [" + topicName + "] event [" + event.getName() + ", " + event.getNumCats() + "]");
+
+                }
+            }
+        } finally {
+            consumer.close();
         }
     }
+
 }
