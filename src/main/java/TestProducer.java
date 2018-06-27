@@ -49,9 +49,9 @@ public class TestProducer {
 //        send 21 records
 
         Event[] events = {
-                new Event("Steven", 13),
-                new Event("Ana", 8),
-                new Event("Lorraine", 2)
+                new Event("Steven", 13, true),
+                new Event("Ana", 4, false),
+                new Event("Lorraine", 2, false)
         };
 
         Gson gson = new Gson();

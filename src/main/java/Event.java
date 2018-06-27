@@ -2,10 +2,12 @@ public class Event {
 
     private String name;
     private int numCats;
+    private boolean isCrazyCatLady;
 
-    public Event(String name, int numCats) {
+    public Event(String name, int numCats, boolean isCrazyCatLady) {
         this.name = name;
         this.numCats = numCats;
+        this.isCrazyCatLady = isCrazyCatLady;
     }
 
     public String getName() {
@@ -22,5 +24,12 @@ public class Event {
 
     public void setNumCats(int numCats) {
         this.numCats = numCats;
+    }
+    public boolean isCrazyCatLady() {
+        return isCrazyCatLady;
+    }
+
+    public void setCrazyCatLady(boolean crazyCatLady) {
+        isCrazyCatLady = crazyCatLady;
     }
 }
