@@ -35,7 +35,7 @@ public class TestConsumer {
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
 
-//                System.out.println("Received [" + records.count() + "] records");
+                System.out.println("Received [" + records.count() + "] records");
 
                 for (ConsumerRecord<String, String> record : records) {
 
@@ -45,7 +45,7 @@ public class TestConsumer {
 
                     Event event = gson.fromJson(json, Event.class);
 
-                    System.out.println("Received event from topic [" + topicName + "] event [" + event.getName() + ", " + event.getNumCats() + "]");
+                    System.out.println("Received event from topic [" + topicName + "] event [" + event.getName() + ", " + event.getNumCats() + ", " + event.getIsCrazyCatLady() +"]");
 
                 }
             }

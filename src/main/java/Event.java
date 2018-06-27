@@ -25,7 +25,7 @@ public class Event {
     public void setNumCats(int numCats) {
         this.numCats = numCats;
     }
-    public boolean isCrazyCatLady() {
+    public boolean getIsCrazyCatLady() {
         return isCrazyCatLady;
     }
 

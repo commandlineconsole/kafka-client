@@ -59,9 +59,10 @@ public class TestProducer {
         for (int i = 0; i < events.length; i++) {
 
             Event event = events[i];
-            System.out.println("Sending event to topic [" + topicName + "] event [" + event.getName() + ", " + event.getNumCats() + "]");
-
             String value = gson.toJson(event);
+            System.out.println("Sending event to topic [" + topicName + "] event [" + value + "]");
+
+
             System.out.println("Created JSON [" + value + "]");
 
 
