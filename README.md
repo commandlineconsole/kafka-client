@@ -1,2 +1,2 @@
 # kafka-client
-Kafka producer and consumer practice
+Kafka producer and consumer practice, sending events as JSON
